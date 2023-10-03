@@ -14,7 +14,7 @@ This project is a simple web application built using React and GraphQL. It allow
 
 ## Installation
 
-- Clone this repository using git clone ```https://github.com/your-username/your-repo.git```
+- Clone this repository using ```git clone https://github.com/your-username/your-repo.git```
 - Navigate to the project directory using ```cd <repository>```
 - Install the necessary dependencies using ```npm install```
 - Start the development server using ```npm start```
