@@ -8,7 +8,7 @@ const Header = ()=>{
     const {user, logout} = useAuth();
     return(
         <AppBar style = {{
-            backgroundColor:'#2f2f2f',
+            backgroundColor:'#3D5A6C',
             boxShadow:'none',
             padding:'10px 0px',
             position:'fixed'
@@ -22,16 +22,16 @@ const Header = ()=>{
             
             <div className="menu-items">
                 <Link to='/events'>
-                    <Button color="inherit">Events</Button>
+                    <Button color="inherit" style={{color:"white"}}>Events</Button>
                 </Link>
                 {user ? <Link to='/bookings'>
-                    <Button color="inherit">Bookings</Button>
+                    <Button color="inherit" style={{color:"white"}}>Bookings</Button>
                 </Link> :null}
-                {user ? <Link to='/events'>
-                    <Button color="inherit" onClick={()=>{logout()}}>Sign out</Button>
+                {user ? <Link to='/signin'>
+                    <Button color="inherit" style={{color:"white"}} onClick={()=>{logout()}}>Sign out</Button>
                 </Link>:
                 <Link to='/signin'>
-                    <Button color="inherit">Sign in</Button>
+                    <Button color="inherit" style={{color:"white"}}>Sign in</Button>
                 </Link>
                 }
             </div>

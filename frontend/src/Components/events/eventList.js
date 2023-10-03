@@ -1,13 +1,16 @@
-import React from 'react';
+import { Button,
+    Table, 
+    TableBody,
+    Paper, 
+    TableRow, 
+    TableCell, 
+    CircularProgress, 
+    TableHead} from "@mui/material";
 
-
-const EventList  = ({event}) => {
-    return(
-        <div className='event-list'>
-            <p>{event.title}</p>
-            <p>{event.date}</p>
-        </div>
-    )
+const EventList = ({ event, index }) => {
+    return (
+        <></>
+    );
 }
 
 export default EventList;

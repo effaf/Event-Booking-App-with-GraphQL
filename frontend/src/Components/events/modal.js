@@ -10,11 +10,12 @@ import { useAuth } from '../../context/AuthContext';
 const Modal = (props)=>{
 
     const {user, login, logout} = useAuth();
+    props.setCreateEvent(false);
 
     const submitForm = async (values)=>{
         const dateISO = new Date(values.eventDate).toISOString();
         const price = new Number(values.price);
-        console.log(dateISO);
+        
         let query = `mutation{
             createEvent(eventInput:{   
                 title:"${values.eventName}",
@@ -31,14 +32,14 @@ const Modal = (props)=>{
             url:'http://localhost:8000/graphql',
             method:'post',
             headers:{
-                'Content-Type':'application/json',
-                'Authorization': `Bearer ${user.token}`
+                'Content-Type':"application/json"
             },
             data:{query : query}
         })
 
         console.log(response.data.data);
         props.setModal(false);
+        props.setCreateEvent(true);
         }catch(err){
             throw(err);
         }

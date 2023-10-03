@@ -5,14 +5,17 @@ const getUser = require('./helperfunctions/userData');
 
 
 module.exports = {
-    events: async ()=>{
+
+    events: async (req)=>{
+        console.log("I am inside events resolver2");
+
     try {
         const events = await Event.find();
-        return Promise.all(events.map(event=>{
+        return Promise.all(events.map(event => {
                 return {...event._doc, 
                         _id : event._doc._id.toString(),
                         creator: getUser.bind(this, event._doc.creator),
-                        date:new Date(event._doc.date).toISOString()
+                        date: new Date(event._doc.date).toISOString()
                     }
             }));
         } catch(err){
@@ -23,9 +26,6 @@ module.exports = {
 
 createEvent : async (args, req)=> {
 
-    if(!req.isAuth){
-        throw new Error("Authentication failed");
-    }
     const event = new Event({
         title: args.eventInput.title,
         description : args.eventInput.description,
@@ -38,7 +38,7 @@ createEvent : async (args, req)=> {
         
         const result = await event.save()
         let newEvent = {...result._doc,_id : result.id};
-
+        console.log(newEvent);
         const currentUser = await User.findById(req.userId);
         if(!currentUser){
                 throw new Error("User does not exist");

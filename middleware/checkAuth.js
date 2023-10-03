@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req,res,next) => {
     const authHeader = req.get('Authorization');
+    console.log("I am inside auth");
     
     if(!authHeader){
         req.isAuth = false;
@@ -16,7 +17,7 @@ module.exports = (req,res,next) => {
     
     let decodedToken;
     try {
-
+    console.log("Inside decoded");
     decodedToken = jwt.verify(token, 'myPrivateHashKey');;
     
     }catch(err){
@@ -30,5 +31,7 @@ module.exports = (req,res,next) => {
     }
 
     req.isAuth = true;
+    console.log("Auth is not set to true");
+    console.log(req.isAuth);
     req.userId = decodedToken.userId;
 }

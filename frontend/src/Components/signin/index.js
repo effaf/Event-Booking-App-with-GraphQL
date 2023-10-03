@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios'
 import { useAuth } from "../../context/AuthContext";
 import { Navigate, useNavigate} from "react-router-dom";
+import { toastError, toastSuccess } from "../tools/Tools";
 
 const Signin = () => {
 
@@ -44,10 +45,20 @@ const Signin = () => {
 
             if(isLogin){
                 setError(null);
-                navigate('/events');
                 login(response.data);
+                navigate('/events');    
+                toastSuccess("Welcome");
             }
-            
+            else if (response.data.errors){
+                const errorMessage = response.data.errors[0].message;
+                toastError(errorMessage);
+            }else{
+                navigate('/signin');
+                toastSuccess("You have been signed up. Login to continue");
+                setIsLogin(true);
+                setCurrentState("Login");
+
+            }
 
         }catch(err){
             if(err.response.status === 500){
@@ -55,6 +66,7 @@ const Signin = () => {
                 return;
             }
             console.log(err);
+            // toastError(err.response.data);
             throw err;
         }
 
@@ -76,33 +88,36 @@ const Signin = () => {
 
     return(
         <div className="signin-home">
-            <form onSubmit={formik.handleSubmit} className="form-control">
-                <h2>{`Please ${currentState}`}</h2>
-                <input name="email" placeholder="Email" 
-                       onChange={formik.handleChange}
-                       onBlur={formik.handleBlur}
-                       value={formik.values.email}/>
-                       
-                { formik.touched.email && formik.errors.email ?
-                <div className="error_label">
-                    {formik.errors.email}
-                </div>
-                :null }
-                <input name="password" placeholder="Password" type="password"
-                       onChange={formik.handleChange}
-                       onBlur={formik.handleBlur}
-                       value={formik.values.password}/>
+            <div className="form-container">
+                <form onSubmit={formik.handleSubmit} className="form-control">
+                    <h2>{`Please ${currentState}`}</h2>
+                    <input name="email" placeholder="Email" 
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}/>
+                        
+                    { formik.touched.email && formik.errors.email ?
+                    <div className="error_label">
+                        {formik.errors.email}
+                    </div>
+                    :null }
+                    <input name="password" placeholder="Password" type="password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}/>
 
-                { formik.touched.password && formik.errors.password ?
-                <div className="error_label">
-                    {formik.errors.password}
-                </div>
-                :null }
+                    { formik.touched.password && formik.errors.password ?
+                    <div className="error_label">
+                        {formik.errors.password}
+                    </div>
+                    :null }
 
-                <button type="submit" style={{cursor:'pointer'}}>{`${currentState}`}</button>
-                {error? <div>{error}</div> : null}
-                
-            </form>
+                    <button type="submit" style={{cursor:'pointer'}}>{`${currentState}`}</button>
+                    {error? <div>{error}</div> : null}
+
+                    
+                    
+                </form>
                 {isLogin ?
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <p>New user? Please sign up</p>
@@ -112,6 +127,8 @@ const Signin = () => {
                 <p>Go back to login</p>
                 <button type="submit" style={{cursor:'pointer'}} onClick={()=>{setIsLogin(true); setCurrentState("Login");}}>Go back</button>
                 </div>}
+            </div>
+                
                 
         </div>
     )
