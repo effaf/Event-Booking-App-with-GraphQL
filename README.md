@@ -23,3 +23,5 @@ This project is a simple web application built using React and GraphQL. It allow
 - Start the front end development server using ```npm start```
 - Open the application in your browser at ```http://localhost:3000```
 - To access graphQL open the appliction in your browser at ```http://localhost:8000/graphql```
+
+*Note* - I have configured the database to be publically accessible, but since I do not have a premium account it might not work. When logging in, you might encounter a _MongoDB error_. Please email me at *postshlok@gmail.com* for access to the database. 
